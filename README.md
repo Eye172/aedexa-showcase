@@ -1,76 +1,165 @@
 # AEDEXA
-### From a drawing and a parcel to an inspectable spatial model.
+### A site drawing becomes a spatial model you can inspect.
 
-AEDEXA combines a browser workspace for architectural site planning with a research pipeline for reconstructing geometry from technical drawings. **QwertyS · architectural tooling · hackathon prototype.**
+**QwertyS · HTML Challenge 2026 — first place · AI Builders Hackathon — participated, no prize**
 
-![The browser workspace brings the site, controls and planning context into one view.](site.webp)
+[Open the hackathon app](https://aedexa.site/) ·
+[Watch the submitted demo](https://www.youtube.com/watch?v=wwHJ0La7rXE) ·
+[Read the Devpost submission](https://devpost.com/software/aedexa)
 
-*The browser workspace brings the site, controls and planning context into one view.*
+![The hackathon workspace: selecting and inspecting the surroundings of a site.](site.webp)
 
-## Two connected problems
+*A capture of the hackathon edition. All product images and public demonstrations in this
+repository belong to that edition, including its earlier interface iterations.*
 
-An early planning decision needs both a usable building model and an understanding of the site around it. A drawing file does not automatically contain a coherent 3D building: plans and elevations may be unlabelled, dimensions can refer to different objects, and several unrelated views can share the same sheet. A parcel outline also tells only part of the story when the land has elevation changes.
+## Start with the land and the evidence
 
-The project therefore has two tracks: **an interactive planning experience**, where geometry and terrain can be explored, and **a deterministic reconstruction investigation**, where a drawing must provide enough evidence to support a model. They share a spatial workflow, but have different maturity levels.
+Early architectural decisions bring several kinds of information together: a parcel,
+a topographic survey, utility lines, surrounding buildings and a proposed structure.
+Those facts are often scattered between CAD files, maps and individual drawings.
+AEDEXA puts them into a browser workspace where a user can move from a drawing or map
+to a site model, inspect the assumptions and export the result.
 
-## Explore the site before placing the building
+The central idea is that a useful model must remain explainable. A measured elevation,
+a regulatory value and an AI-inferred detail have different meanings. Missing information
+should stay visible rather than becoming an apparently precise number.
 
-The browser workflow starts with location and the parcel. Map contours establish the area of interest; topographic views show the shape of the terrain. The user can switch between an overhead interpretation and a spatial one rather than trying to infer every slope from a flat map.
+## Four ways into the workspace
 
-![Parcel contour editing in the September functional prototype.](map-contour.jpg)
+| Workspace | Input and result |
+|---|---|
+| Placement and setbacks | A DWG/DXF site drawing, calibrated plan image or map outline leads to a boundary, constraints, buildable area and building placement. |
+| DWG topographic survey | Survey geometry, spot elevations and contours become classified objects and a triangulated 3D terrain surface, with DAE/DXF export. |
+| 2D to 3D reconstruction | Source views feed an audited parametric recipe, deterministic geometry construction and a separate model review. Model access is required. |
+| Project archive | Saved results can be inspected and reopened rather than disappearing after one calculation. |
 
-*Parcel contour editing in the September functional prototype.*
+### Trace the parcel before calculating
 
-![A topographic plan exposes the terrain as an overhead working surface.](terrain-2d.jpg)
+A satellite view can establish where the site is, but a traced polygon does not by itself
+prove cadastral boundaries or surveying accuracy. The application carries the working
+boundary into its calculation and inspection views. CAD layer roles and drawing type
+help determine whether an uploaded sheet actually represents a site suitable for placement.
 
-*A topographic plan exposes the terrain as an overhead working surface.*
+![Parcel editing in an earlier functional iteration of the hackathon build.](map-contour.jpg)
 
-![The same terrain can be inspected in 3D; this is an application capture, not a rendered architectural proposal.](terrain-3d.jpg)
+*Earlier hackathon interface: the parcel contour remains a visible, editable input.*
 
-*The same terrain can be inspected in 3D; this is an application capture, not a rendered architectural proposal.*
+### Read the terrain from above and from the side
 
-## Bring geometry into the planning workspace
+An overhead plan is useful for understanding the survey structure; a 3D surface makes
+changes in elevation easier to inspect. AEDEXA exposes both views and the geometry used
+to build them. DWG decoding runs through LibreDWG WebAssembly, while terrain construction
+uses triangulation of the available elevation evidence.
 
-The modelling view allows a building to be inspected from different directions. This matters because a plausible isometric silhouette can still hide an incorrect footprint or height relationship. Overhead and profile views provide a quick cross-check before the model is used for placement.
+![The hackathon topographic workspace with its drawing, classified objects and 3D terrain.](topography.webp)
 
-![The darker presentation build: geometry inspection within the model workspace.](model.webp)
+*Topographic processing in the dark hackathon interface.*
 
-*The darker presentation build: geometry inspection within the model workspace.*
+<details><summary>Compare the earlier 2D and 3D terrain views</summary>
 
-![A drawing-derived building example in the earlier functional prototype.](drawing-model.jpg)
+![The topographic plan in an earlier functional iteration.](terrain-2d.jpg)
 
-*A drawing-derived building example in the earlier functional prototype.*
+![The corresponding terrain shown as a spatial surface.](terrain-3d.jpg)
 
-![An overhead inspection of the same building example makes the footprint easier to verify.](model-top.jpg)
+*These captures document the earlier hackathon interface; they are not screenshots of
+a separate commercial edition.*
 
-*An overhead inspection of the same building example makes the footprint easier to verify.*
+</details>
 
-The placement stage joins the building and the parcel. Its purpose is to make scale and spatial relationships visible: the building should be assessed against the working site rather than shown as an isolated object on an infinite grid.
+### Make the building and site part of one decision
 
-![Building placement against the site and buildable area, with scale controls visible.](placement.jpg)
+An isolated model on an infinite grid hides the context that matters in site planning.
+The placement view joins the proposed building to the working parcel, terrain and
+constraints. Setbacks and utility protection areas contribute to the usable area;
+surroundings and building dimensions remain part of the inspection.
 
-*Building placement against the site and buildable area, with scale controls visible.*
+![Building placement with site scale and constraint controls.](placement.jpg)
 
-## Reconstruction: evidence before extrusion
+*A functional hackathon capture of the placement stage.*
 
-The reconstruction pipeline looks for identifiable views, extracts geometric and dimensional evidence, pairs compatible plans and elevations, and checks whether a supported archetype can be built. It handles rectangular and selected polygonal footprints in its controlled cases. Missing captions, inconsistent dimensions or an unsupported form should produce a diagnostic outcome instead of an invented building.
+## Reconstruction has to account for the drawing
 
-~~~mermaid
-flowchart TD
- A[DWG / drawing input] --> B[Conversion and view discovery]
- B --> C[Caption and dimension evidence]
- C --> D[Plan / elevation pairing]
- D --> E{Supported consistent geometry?}
- E -->|Yes| F[Construct and inspect model]
- E -->|No| G[Explain the failed stage]
- F --> H[Browser placement and terrain context]
-~~~
+The browser reconstruction workflow audits the drawing's source views, creates a
+structured recipe, checks it against a schema, constructs geometry and runs an independent
+visual review. The point is to make unsupported geometry distinguishable from measured
+CAD information. AI checks are explicit actions rather than a prerequisite for every
+terrain or placement operation.
 
-### What the real-drawing audit revealed
+![The 2D-to-3D workspace, with the resulting model and inspection context.](model.webp)
 
-The internal audit covered **66 industrial DWG files**. It produced one built model; the other files exposed problems at different stages. That result is valuable because it identifies the actual bottleneck: reliable view interpretation is much harder than extruding an already clean footprint.
+*Hackathon edition: the darker reconstruction workspace.*
 
-| Audit outcome | Files |
+<details><summary>Inspect earlier building and overhead examples</summary>
+
+![A drawing-derived building in an earlier functional hackathon iteration.](drawing-model.jpg)
+
+![The same example inspected from above.](model-top.jpg)
+
+*Multiple viewpoints make footprint and height relationships easier to question.*
+
+</details>
+
+## Where the computation lives
+
+The web edition uses **React 19, TypeScript, Vite/vinext, Three.js, Leaflet,
+LibreDWG WebAssembly, Delaunator and polygon-clipping**. A Cloudflare Worker serves the
+application; Cloudflare D1 supports accounts and project synchronization. Geometry and
+terrain calculations run in the browser. Optional AI analysis and reconstruction use
+server routes and configured model-provider access.
+
+```mermaid
+flowchart LR
+ A[Drawing or map input] --> B[Drawing type and layer roles]
+ B --> C[Boundary, elevations and constraints]
+ C --> D[Buildable area and terrain]
+ D --> E[Building placement and inspection]
+ E --> F[Saved project and export]
+ A --> G[Optional reconstruction audit]
+ G --> H[Recipe, solver and model review]
+ H --> E
+```
+
+The registry attaches source documents and clauses to planning rules. Results use
+statuses including `PASS`, `FAIL`, `MISSING_DATA` and `EXPERT_REVIEW`. This makes incomplete
+or unverified inputs visible. It does not turn a hackathon application into an approved
+construction-design or regulatory certification system.
+
+## A contest project with a public working release
+
+The [Devpost submission](https://devpost.com/software/aedexa) records **275 automated
+checks**, a regression corpus of **69 third-party DWG drawings** (**63 readable models**)
+and **19 source-linked building-code rules**. These are the development results reported
+for the submitted web edition, rather than a new test execution performed for this showcase.
+
+AEDEXA received **first place at HTML Challenge 2026**. The organizer's
+[official results, published 19 September](https://www.instagram.com/html_challenge/p/DddbiW2jNRV/?img_index=2),
+name **Qwertys** in first place. It was also submitted to the **AI Builders Hackathon**
+on Devpost; that submission did not receive a prize. These are separate events and outcomes.
+The [hackathon record](docs/HACKATHON.md) links the event information, submitted project
+and video, official result and retained team certificates.
+
+<details><summary>Official HTML Challenge results</summary>
+
+![Official HTML Challenge 2026 results: Qwertys in first place.](media/html-challenge-winners.webp)
+
+*Original organizer artwork from the [19 September results publication](https://www.instagram.com/html_challenge/p/DddbiW2jNRV/?img_index=2).
+Credit: HTML Challenge / @html_challenge. Preserved without alteration.*
+
+</details>
+
+The implementation includes local setup, geometry tests, demonstration drawings and deployment instructions. The hosted app and submitted video refer to the hackathon edition. This showcase distributes presentation materials; implementation access is managed separately.
+
+### Earlier deterministic reconstruction research
+
+<details><summary>What the earlier Python drawing audit established</summary>
+
+The earlier Python investigation audited 66 industrial DWG files. One produced a built
+model; other cases stopped at conversion, view discovery, view pairing or supported
+geometry checks. This was a diagnostic experiment on that older pipeline, separate from
+the browser platform shown above. It is retained as development history rather than
+used as a performance claim for the current web workflow.
+
+| Earlier audit outcome | Files |
 |---|---:|
 | Conversion failure | 2 |
 | No usable view, despite captions | 21 |
@@ -79,20 +168,23 @@ The internal audit covered **66 industrial DWG files**. It produced one built mo
 | Unsupported or invalid archetype | 17 |
 | Model built | 1 |
 
-Controlled polygon examples and a successful browser demonstration do not establish general industrial drawing reconstruction. The audit is kept separate from the product walkthrough for that reason.
+</details>
 
-## Design and implementation choices
+## Beyond the hackathon edition
 
-**Browser:** interactive map, terrain and 3D model views, with dedicated controls for parcel work and placement. **Geometry:** conversion, view discovery, dimension interpretation and deterministic construction checks. **Validation:** compare multiple viewpoints and keep stage-specific failure information.
+The expanded edition is maintained privately and has progressed beyond the competition prototype. As confirmed by the team on 12 October 2026, it is being used in **two company pilots**, with a **usage agreement in place**. These are product-use milestones, not claims of paid revenue or independently measured customer outcomes.
 
-The gallery deliberately includes two documented UI generations: the dark presentation build and the light September functional prototype. They demonstrate different parts of the project; they are not presented as screenshots of one unchanged release. AEDEXA remains a prototype and does not replace a professional architectural or regulatory review.
+The public gallery and videos document the hackathon edition. Company names, agreement text, customer drawings and the expanded edition's implementation are not published here. The HTML Challenge first-place result and the AI Builders Hackathon participation without a prize refer to different events.
 
 ---
 
-### Built by
 
-**QwertyS** — [Shakhnazar Akhmer](https://github.com/Eye172) and [Nurkhan Aimukatov](https://github.com/pip00sya).
+### Built by QwertyS
 
-[More projects](https://github.com/Eye172) · [Contact](mailto:shakh090909@gmail.com)
+**[Shakhnazar Akhmer / Eye172](https://github.com/Eye172)** and **[Nurkhan Aimukatov / pip00sya](https://github.com/pip00sya)**.
 
-This repository presents the product and its engineering. The implementation is maintained separately. Screenshots and documented experiments are identified in their captions; a live deployment is not required to explore the case study.
+[Companion showcase on Nurkhan's account](https://github.com/pip00sya/aedexa-showcase) · [Shakhnazar's projects](https://github.com/Eye172) · [Nurkhan's projects](https://github.com/pip00sya).
+
+The two showcases document the same joint project. Product facts, authors and evidence are shared; each account maintains its own presentation repository.
+
+[Hackathon record and supporting sources](docs/HACKATHON.md) · [Media provenance](docs/MEDIA.md).
