@@ -176,6 +176,21 @@ The expanded edition is maintained privately and has progressed beyond the compe
 
 The public gallery and videos document the hackathon edition. Company names, agreement text, customer drawings and the expanded edition's implementation are not published here. The HTML Challenge first-place result and the AI Builders Hackathon participation without a prize refer to different events.
 
+## Award certificate
+
+**1st place at HTML Challenge 2026**, organized by Allinone. The certificate names Akhmer Shakhnazar and team Qwertys. This award belongs to HTML Challenge; the separate AI Builders Hackathon submission did not receive a prize.
+
+[Original documents and certificate gallery](docs/awards/README.md).
+
+<details>
+<summary>View the certificate</summary>
+
+**HTML Challenge 2026 — 1st place, Qwertys**
+
+<a href="docs/awards/html-challenge-first-place.pdf"><img src="docs/awards/html-challenge-first-place.png" alt="HTML Challenge 2026 — 1st place, Qwertys" width="760"></a>
+
+</details>
+
 ---
 
 

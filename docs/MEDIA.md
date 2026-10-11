@@ -14,8 +14,8 @@ or third-party university photographs. The LOCUS case/regulations, where include
 are organizer documents retained with their original attribution.
 
 [File hashes and sizes](media-manifest.json) identify the included media. No certificate
-image or award graphic has been invented. Certificates held by the team are mentioned
-only in the event record until their actual scans are supplied.
+image or award graphic has been invented. Shakhnazar’s original certificate and its rendered preview are published in the
+[certificate gallery](awards/README.md), with separate [file checksums](awards/manifest.json).
 
 All AEDEXA product captures belong to hackathon iterations. The submitted video is linked on YouTube (`wwHJ0La7rXE`); the expanded edition is not pictured.
 

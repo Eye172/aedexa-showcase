@@ -6,8 +6,7 @@ An online website-development competition, 30 August–14 September 2026.
 **Result: first place**, confirmed by the organizer's
 [19 September results](https://www.instagram.com/html_challenge/p/DddbiW2jNRV/?img_index=2),
 which name Qwertys as the winner. The [original results artwork](../media/html-challenge-winners.webp)
-is retained with organizer attribution. The team also retains first-place certificates;
-their scans are not published here yet.
+is retained with organizer attribution. Shakhnazar’s [first-place certificate](awards/README.md) is now included with its original PDF.
 
 [Event-calendar listing](https://hackathon.kz/event.html?slug=html-challenge-2026)
 provides the schedule and format. It is a secondary event listing, not a winners list.
@@ -33,3 +32,9 @@ to this Devpost event. All displayed product media belong to the hackathon editi
 
 
 Sources reviewed: 12 October 2026.
+
+## Personal certificate
+
+**1st place at HTML Challenge 2026**, organized by Allinone. The certificate names Akhmer Shakhnazar and team Qwertys. This award belongs to HTML Challenge; the separate AI Builders Hackathon submission did not receive a prize.
+
+[Original document, preview and provenance](awards/README.md).
