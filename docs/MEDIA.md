@@ -1,7 +1,6 @@
 # Media provenance
 
-This showcase combines the original Eye172 project gallery with event records and retained media synchronized from [pip00sya/aedexa-showcase](https://github.com/pip00sya/aedexa-showcase) on 12 October 2026. Screenshots show real application interfaces; synthetic demo records,
-archived runs and interface generations are identified in the README captions.
+This showcase combines the original Eye172 project gallery with event records and retained media synchronized from [pip00sya/aedexa-showcase](https://github.com/pip00sya/aedexa-showcase) on 12 October 2026. Product screenshots show the hackathon application and its earlier interface iterations. The pilot report presents measurements from the expanded edition.
 
 QwertyS: Nurkhan Aimukatov and Shakhnazar Akhmer. Existing presentation authorship is
 credited to the shared project and the original Eye172 showcase. Each showcase repository
@@ -10,11 +9,9 @@ original engineering work.
 
 Application licenses and third-party media rights are governed by their respective
 source projects; this presentation repository does not relicense the application code
-or third-party university photographs. The LOCUS case/regulations, where included,
-are organizer documents retained with their original attribution.
+or third-party assets. Organizer artwork retains its original attribution.
 
-[File hashes and sizes](media-manifest.json) identify the included media. No certificate
-image or award graphic has been invented. Shakhnazar’s original certificate and its rendered preview are published in the
+[File hashes and sizes](media-manifest.json) identify the included media. Shakhnazar’s original certificate and its rendered preview are published in the
 [certificate gallery](awards/README.md), with separate [file checksums](awards/manifest.json).
 
 All AEDEXA product captures belong to hackathon iterations. The submitted video is linked on YouTube (`wwHJ0La7rXE`); the expanded edition is not pictured.
@@ -39,4 +36,10 @@ These additions show the hackathon edition. They contain no expanded-edition med
 The landing's published statistics remain project-reported; the capture does not
 turn them into a new verification run.
 
-Synchronized from [pip00sya/aedexa-showcase at 7546b34](https://github.com/pip00sya/aedexa-showcase/commit/7546b342ef9d53f8350b985d093aa6fefe2e1afd). Original Eye172 certificates and the confirmed expanded-edition milestones remain in this showcase.
+## Professional pilot results
+
+The [Ansar Architects report](pilot/README.md) documents the completed closed pilot
+in one company, 20 September–4 October 2026. Its task-time chart is rendered from
+the reported measurements, including stated review and corrections. It is a data
+visualization, distinct from the hackathon product captures. The report retains
+quality failures, cohort sizes and the continuing trial’s separate status.
